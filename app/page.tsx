@@ -159,7 +159,7 @@ export default function Home() {
             {['Mans', 'Womans', 'Kids'].map((category) => (
               <div key={category} className="relative group ">
                 <Image 
-                  src={`/cat${category.toLowerCase()}.png`} 
+                  src={`/cat${category}.png`} 
                   alt={category} 
                   width={400} 
                   height={400} 

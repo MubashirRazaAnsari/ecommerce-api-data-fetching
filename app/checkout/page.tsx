@@ -199,7 +199,7 @@ const Checkout = () => {
             </div>
             <div className="flex p-10">
               <Link href={"/thankyou"}>
-              <button className="bg-black text-white p-3 rounded-full w-full ">
+              <button className="bg-black text-white p-3 rounded-full w-[200px] ">
                 Continue
               </button>
               </Link>
