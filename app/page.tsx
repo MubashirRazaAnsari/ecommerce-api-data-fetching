@@ -1,38 +1,59 @@
+'use client';
+
 import Image from "next/image";
 import Link from "next/link";
 import Cardgrid from "./components/Cardgrid";
 import Card from "./components/Card";
 import { mens, shoes, womens } from "./data";
-import React from "react";
+import React, { useEffect } from "react";
+
+interface Product {
+  id: number,
+  title: string,
+  price: number,
+  description: string,
+  category: string,
+  image: string,
+  rating: {
+    rate: number,
+    count: number
+  }
+}
 
 export default function Home() {
+
+  const [data, setData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+
+  useEffect(()=>{
+   const fetchData = async () => {
+     const res = await fetch('https://fakestoreapi.com/products');
+     const data = await res.json();
+     const sliceData = data.slice(0, 8);
+      setData(sliceData)
+      setLoading(false);
+   }
+   fetchData();
+  }, [])
+
+  if(loading){
+    return <h1 className='text-2xl'>Loading Products...</h1>
+  }
+
+  
   return (
     <div className="flex flex-col w-full">
-      {/* App Banner */}
-      <section className="bg-gray-100 w-full py-3">
-        <div className="flex flex-col w-full max-w-[1440px] mx-auto items-center gap-1">
-          <h1 className="text-base md:text-lg font-medium">Hello Nike App</h1>
-          <p className="text-xs md:text-sm text-center">
-            Download the app to get the latest news and updates{" "}
-            <Link href="/" className="text-black underline hover:text-gray-600">
-              Get Your App
-            </Link>
-          </p>
-        </div>
-      </section>
-
-      {/* Hero Section */}
-      <section className="w-full">
+      <section className="w-full my-5">
         <div className="w-full max-w-[1440px] mx-auto h-[50vh] md:h-[70vh] lg:h-[80vh] relative">
           <Image
-            src="/hero.png"
+            src="/hero.jpg"
             alt="Nike Hero"
             fill
             priority
             className="object-fit object-cover object-center"
           />
         </div>
-        <div className="text-center p-4 md:p-8 max-w-3xl mx-auto">
+        {/* <div className="text-center p-4 md:p-8 max-w-3xl mx-auto">
           <h1 className="text-xs md:text-sm font-medium">First look</h1>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 mt-2">Nike Air Max Pulse</h2>
           <p className="text-sm md:text-base max-w-2xl mx-auto">
@@ -51,7 +72,7 @@ export default function Home() {
               </button>
             </Link>
           </div>
-        </div>
+        </div> */}
       </section>
 
       {/* Air Max Section */}
@@ -60,7 +81,6 @@ export default function Home() {
           <Cardgrid
             gridtitle="Best of Air Max"
             lggrid={true}
-            data={shoes}
             buttontext="Shop"
           />
         </div>
@@ -104,7 +124,6 @@ export default function Home() {
           <div className="w-full">
             <Cardgrid
               lggrid={false}
-              data={mens}
               gridtitle="Gear Up"
               buttontext="Men"
             />
@@ -112,7 +131,6 @@ export default function Home() {
           <div className="w-full">
             <Cardgrid
               lggrid={false}
-              data={womens}
               gridtitle="Gear Up"
               buttontext="Women"
             />
@@ -120,7 +138,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Don't Miss Section */}
       <section className="w-full px-4 my-10">
         <div className="max-w-[1440px] mx-auto flex justify-between items-center mb-4">
           <h1 className="text-xl md:text-2xl font-medium">Don&apos;t Miss</h1>
@@ -151,8 +168,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* The Essentials Section */}
-      <section className="w-full px-4 my-10">
+      {/* <section className="w-full px-4 my-10">
         <div className="max-w-[1440px] mx-auto">
           <h1 className="text-xl md:text-2xl font-bold my-6">The Essentials</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -175,11 +191,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer Links Section */}
-      <section className="w-full px-4 my-10">
+      <section className="w-full px-4 my-5">
         <div className="max-w-[890px] mx-auto p-6">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {/* Icons Links */}
             <div className="w-full flex flex-col gap-3">
               <h1 className="text-sm font-medium">Icons</h1>
               {['Air Force 1', 'Huarache', 'Air Max 90', 'Air Max 95'].map((item) => (
@@ -193,7 +207,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Shoes Links */}
             <div className="w-full flex flex-col gap-3">
               <h1 className="text-sm font-medium">Shoes</h1>
               {['All Shoes', 'Custom Shoes', 'Jordan Shoes', 'Running Shoes'].map((item) => (
@@ -207,7 +220,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Clothing Links */}
             <div className="w-full flex flex-col gap-3">
               <h1 className="text-sm font-medium">Clothing</h1>
               {['All Clothing', 'Modest Wear', 'Hoodies & Pullovers', 'Shirts & Tops'].map((item) => (
@@ -220,8 +232,6 @@ export default function Home() {
                 </Link>
               ))}
             </div>
-
-            {/* Kids Links */}
             <div className="w-full flex flex-col gap-3">
               <h1 className="text-sm font-medium">Kid&apos;s</h1>
               {[
@@ -241,7 +251,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }

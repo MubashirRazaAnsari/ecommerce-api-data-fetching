@@ -24,10 +24,10 @@ const page = () => {
         <section className="flex flex-col gap-2">
           <div className="flex flex-col gap-2">
             <h1 className="text-2xl font-bold">
-              WHAT PAYMENT OPTIONS CAN I USE ON NIKE ORDERS?
+              WHAT PAYMENT OPTIONS CAN I USE ON ORDERS?
             </h1>
             <p className="text-sm text-gray-500">
-              We want to make buying your favourite Nike shoes and gear online
+              We want to make buying your favourite shoes and gear online
               fast and easy, and we accept the following payment options:
             </p>
             <p className="text-sm text-gray-500 ml-0 md:ml-8 md:mt-10">
@@ -48,7 +48,7 @@ const page = () => {
           <div className="flex flex-col gap-2">
             <p className="text-sm text-gray-500">
               <span className="font-bold text-base underline text-black">
-                Nike Members
+                Members
               </span>{" "}
               can store multiple debit or credit cards in their profile for
               faster checkout. If you're not already a Member, join us today.
@@ -58,7 +58,7 @@ const page = () => {
                 <Link href="/">JOIN US</Link>
               </button>
               <button className="bg-black text-white px-6 py-2 font-medium rounded-full">
-                SHOP NIKE
+                SHOP NOW
               </button>
             </div>
           </div>
@@ -81,7 +81,7 @@ const page = () => {
                 Can I pay for my order with multiple methods?
               </p>
               <p className="text-sm text-gray-600">
-                No, payment for Nike orders can&apos;t be split between multiple
+                No, payment for orders can&apos;t be split between multiple
                 payment methods.
               </p>
               <p className="text-sm font-medium text-black mt-5">
@@ -104,11 +104,11 @@ const page = () => {
                 Why don&apos;t I see Apple Pay as an option?
               </p>
               <p className="text-sm text-gray-600">
-                To see Apple Pay as an option in the Nike App or on Nike.com,
+                To see Apple Pay as an option in Our App or on BuyIT.com,
                 you&apos;ll need to use a compatible Apple device running the latest
                 OS, be signed in to your iCloud account and have a supported
                 card in your Wallet. Additionally, you&apos;ll need to use Safari to
-                use Apple Pay on Nike.com.
+                use Apple Pay on BuyIT.com.
               </p>
             </div>
             <div className="flex flex-col gap-2">
@@ -126,8 +126,8 @@ const page = () => {
               <div className="flex flex-col gap-2">
                 <h1 className="text-lg font-bold text-gray-700">Related Questions</h1>
                 <div className="flex flex-col gap-2 ml-0 md:ml-8">
-                <Link href="/" className="text-sm text-gray-900 hover:text-gray-500 underline">WHAT ARE NIKE&apos;S DELIVERY OPTIONS?</Link>
-                <Link href="/" className="text-sm text-gray-900 hover:text-gray-500 underline">HOW DO I GET FREE DELIVERY ON NIKE ORDERS?</Link>
+                <Link href="/" className="text-sm text-gray-900 hover:text-gray-500 underline">WHAT ARE BuyIT&apos;S DELIVERY OPTIONS?</Link>
+                <Link href="/" className="text-sm text-gray-900 hover:text-gray-500 underline">HOW DO I GET FREE DELIVERY ON ORDERS?</Link>
               </div>
               </div>
             </div>

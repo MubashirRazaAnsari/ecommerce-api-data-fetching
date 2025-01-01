@@ -16,7 +16,7 @@ const Checkout = () => {
                 <h1 className="text-3xl md:text-4xl font-medium text-primary-dark mb-2">
                   How would you like to get your order?
                 </h1>
-                <p className="text-sm text-gray-500">
+                {/* <p className="text-sm text-gray-500">
                   Customs regulation for India require a copy of the recipient&apos;s
                   KYC. The address on the KYC needs to match the shipping
                   address. Our courier will contact you via SMS/email to obtain
@@ -25,7 +25,7 @@ const Checkout = () => {
                   it with customs officials) for all orders and returns. If your
                   KYC does not match your shipping address, please click the
                   link for more information. Learn More
-                </p>
+                </p> */}
               </div>
               <div className=" flex items-center w-1/2 my-10  border border-black p-6 rounded-lg hover:bg-gray-100 transition-colors gap-2">
                 <Image
@@ -44,20 +44,12 @@ const Checkout = () => {
             </div>
           </div>
           <h1 className="text-3xl md:text-4xl font-medium text-primary-dark mb-5">
-            Your order
+            Your Information
           </h1>
           <form className="flex flex-col gap-4 w-full md:w-1/3 lg:w-2/3">
             <div className="flex flex-col gap-3">
-              <input
-                type="email"
-                placeholder="Email"
-                className="p-3 rounded-md border w-full h-[3rem]"
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                className="p-3 rounded-md border w-full h-[3rem]"
-              />
+              <div className="flex justify-between gap-3">
+
               <input
                 type="name"
                 placeholder="First Name"
@@ -68,6 +60,21 @@ const Checkout = () => {
                 placeholder="Last Name"
                 className="p-3 rounded-md border w-full h-[3rem]"
               />
+              </div>
+              <div className="flex justify-between gap-3">
+
+
+              <input
+                type="email"
+                placeholder="Email"
+                className="p-3 rounded-md border w-full h-[3rem]"
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                className="p-3 rounded-md border w-full h-[3rem]"
+              />
+              </div>
               <input
                 type="address"
                 placeholder="Address line 1"
@@ -78,7 +85,7 @@ const Checkout = () => {
                 placeholder="Address line 2"
                 className="p-3 rounded-md border w-full h-[3rem]"
               />
-              <div className="flex justify-between items-center gap-2">
+              <div className="flex justify-between gap-2">
                 <input
                   type="text"
                   placeholder="Postal Code"
@@ -91,11 +98,11 @@ const Checkout = () => {
                   <option value="Islamabad">Islamabad</option>
                 </select>
               </div>
-              <div className="flex justify-between items-center gap-2">
+              <div className="flex justify-between gap-2">
                 <input
                   type="text"
                   placeholder="State"
-                  className="p-3 rounded-md border w-1/2 h-[3rem]"
+                  className="p-3 rounded-md border h-[3rem]"
                 />
                 <select className="p-3 rounded-md border w-full h-[3rem]">
                   <option value="Pakistan">Pakistan</option>
@@ -216,7 +223,7 @@ const Checkout = () => {
             </div>
           </form>
         </section>
-        <section className="w-full md:w-1/3 lg:w-1/4">
+        <section className="w-full md:w-1/3 lg:w-1/3">
           <Summery />
           <div className="w-full">
             {cart.map((item) => (
@@ -233,8 +240,7 @@ const Checkout = () => {
                     className="shadow-md"
                   />
                   <div className="flex flex-col gap-1">
-                    <h3 className="text-lg font-medium">{item.name}</h3>
-                    <p className="text-gray-500 text-sm">{item.description}</p>
+                    <h3 className="text-base font-medium">{item.name}</h3>
                     <div className="flex items-center gap-2">
                       <p className="text-gray-500 text-sm gap-2">
                         Size <span className="font-medium">L</span>

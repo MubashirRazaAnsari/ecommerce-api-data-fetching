@@ -8,8 +8,8 @@ import { CartProvider } from "./context/CartContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Nike",
-  description: "Template 3 of Hackathon Nike Web design for",
+  title: "Buy-It",
+  description: "Ecommerce Website for Milestone 3- API data fetching, Shippment Tracking and Google auth",
 };
 
 export default function RootLayout({

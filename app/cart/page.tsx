@@ -37,7 +37,7 @@ const CartPage = () => {
                   Free Delivery
                 </h1>
                 <p className="text-sm text-gray-500 font-satoshi">
-                  Apply to orders over 14000 or more{" "}
+                  Apply to orders over $140 or more{" "}
                   <Link href="/" className="text-primary-dark font-medium">
                     View Details
                   </Link>

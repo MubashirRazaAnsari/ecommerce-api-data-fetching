@@ -1,29 +1,64 @@
 "use client";
+
 import Image from "next/image";
-import { shoes, mens, womens } from "../../data";
+import React, { useEffect, useState } from "react";
 import { useCart } from "../../context/CartContext";
-import { useState } from "react";
-import { FaMinus } from "react-icons/fa";
-import { FaPlus } from "react-icons/fa";
-import Link from "next/link";
+import { FaMinus, FaPlus } from "react-icons/fa";
+import { notFound } from "next/navigation";
 
-// Helper function to get product by ID from all product arrays
-const getProductById = (id: string) => {
-  const allProducts = [...shoes, ...mens, ...womens];
-  return allProducts.find((product) => product.id === id);
-};
+interface Product {
+  id: string;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+}
 
-export default function ProductPage({ params }: { params: { id: string } }) {
-  const product = getProductById(params.id);
+const ProductPage = ({ params }: { params: { id: string } }) => {
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const res = await fetch(`https://fakestoreapi.com/products/${params.id}`);
+        
+        if (!res.ok) {
+          throw new Error(`Failed to fetch product: ${res.statusText}`);
+        }
+
+        const data = await res.json();
+        setProduct(data);
+      } catch (err) {
+        console.error('Error fetching product:', err);
+        setError(err instanceof Error ? err.message : 'Failed to fetch product');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [params.id]);
+
   const increaseQuantity = () => setQuantity((prev) => prev + 1);
-  const decreaseQuantity = () =>
-    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+  const decreaseQuantity = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+
   const handleAddToCart = () => {
+    if (!product) return;
+    
     addToCart({
       id: product.id,
-      name: product.name,
+      name: product.title,
       price: product.price,
       image: product.image,
       description: product.description,
@@ -31,12 +66,27 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     });
   };
 
-  if (!product) {
+  if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold">Product not found</h1>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
       </div>
     );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-red-500 text-center">
+          <h2 className="text-2xl font-bold mb-2">Error</h2>
+          <p>{error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return notFound();
   }
 
   return (
@@ -46,9 +96,9 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         <div className="relative aspect-square w-full">
           <Image
             src={product.image}
-            alt={product.name}
+            alt={product.title}
             fill
-            className="object-cover rounded-lg"
+            className="object-contain rounded-lg"
             priority
           />
         </div>
@@ -57,30 +107,34 @@ export default function ProductPage({ params }: { params: { id: string } }) {
         <div className="flex flex-col gap-6">
           <div>
             <h1 className="text-3xl md:text-4xl font-bold mb-2">
-              {product.name}
+              {product.title}
             </h1>
-            <p className="text-xl text-gray-700">{product.category}</p>
+            <p className="text-xl text-gray-700 capitalize">{product.category}</p>
           </div>
 
           <div className="flex items-center">
             <p className="text-2xl font-medium">
-              ₹ {product.price.toLocaleString()}
+              ${product.price.toFixed(2)}
             </p>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium">Select Size</h3>
-            <div className="grid grid-cols-3 gap-2">
-              {[6, 7, 8, 9, 10, 11].map((size) => (
-                <button
-                  key={size}
-                  className="border border-gray-300 rounded-md py-3 hover:border-black transition-colors"
-                >
-                  UK {size}
-                </button>
-              ))}
+          {/* Only show size selector for clothing/shoes categories */}
+          {(product.category.includes('clothing') || 
+            product.category.includes('shoes')) && (
+            <div className="space-y-4">
+              <h3 className="text-lg font-medium">Select Size</h3>
+              <div className="grid grid-cols-3 gap-2">
+                {[6, 7, 8, 9, 10, 11].map((size) => (
+                  <button
+                    key={size}
+                    className="border border-gray-300 rounded-md py-3 hover:border-black transition-colors"
+                  >
+                    UK {size}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="space-y-4">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-4">
@@ -115,24 +169,33 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           <div className="space-y-4">
             <h3 className="text-lg font-medium">Product Description</h3>
             <p className="text-gray-700 leading-relaxed">
-              {product.description ||
-                `Turn style on its head with this crafted take on the 
-              ${product.name}. Its "inside out"-inspired construction, including unique layering and 
-              exposed foam accents, ups the ante on this timeless silhouette. Details like the 
-              deco stitching on the Swoosh add coveted appeal, while the unexpected shading, rich 
-              mixture of materials and aged midsole aesthetic give this release an artisan finish.`}
+              {product.description}
             </p>
+          </div>
+
+          {/* Rating Section */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-medium">Rating</h3>
+            <div className="flex items-center gap-2">
+              <span className="text-yellow-500">★</span>
+              <span>{product.rating.rate}/5</span>
+              <span className="text-gray-500">
+                ({product.rating.count} reviews)
+              </span>
+            </div>
           </div>
 
           {/* Delivery & Returns */}
           <div className="space-y-4">
             <h3 className="text-lg font-medium">Free Delivery and Returns</h3>
             <p className="text-gray-700">
-              Your order of ₹14,000 or more gets free standard delivery.
+              Free standard delivery on orders over $50.
             </p>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default ProductPage;

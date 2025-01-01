@@ -7,7 +7,7 @@ import Link from 'next/link';
 const Summery = () => {
 
     const { totalPrice } = useCart();
-    const freeDelivery = totalPrice >= 14000;
+    const freeDelivery = totalPrice >= 140;
     const pathname = usePathname();
   
   return (

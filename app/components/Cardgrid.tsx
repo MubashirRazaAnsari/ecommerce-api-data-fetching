@@ -1,26 +1,59 @@
 'use client';
-import React, { useState } from 'react'
+import React, { useState , useEffect} from 'react'
 import Card from './Card'
 import { IoChevronForward, IoChevronBack } from 'react-icons/io5'
-import { Product } from '../data'
+// import { Product } from '../data'
 
-const Cardgrid = ({ lggrid, gridtitle , buttontext, data }: { lggrid: boolean, gridtitle: string, buttontext: string, data: Product[] }) => {
+
+interface Product {
+    id: string,
+    title: string,
+    price: number,
+    description: string,
+    category: string,
+    image: string,
+    rating: {
+      rate: number,
+      count: number
+    }
+  }
+  
+
+const Cardgrid = ({ lggrid, gridtitle , buttontext }: { lggrid: boolean, gridtitle: string, buttontext: string }) => {
   const [startIndex, setStartIndex] = useState(0)
+  const [apiData, setApiData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+
+  useEffect(()=>{
+   const fetchData = async () => {
+     const res = await fetch('https://fakestoreapi.com/products');
+     const data = await res.json();
+     const sliceData = data.slice(0, 8);
+     setApiData(sliceData)
+     setLoading(false)
+   }
+   fetchData();
+  }, [])
+
+  if(loading){
+    return <h1 className='text-2xl'>Loading Products...</h1>
+  }
+
 
   const handleNext = () => {
-    setStartIndex((prev) => (prev + 1) % data.length)
+    setStartIndex((prev) => (prev + 1) % apiData.length)
   }
 
   const handlePrev = () => {
-    setStartIndex((prev) => (prev - 1 + data.length) % data.length)
+    setStartIndex((prev) => (prev - 1 + apiData.length) % apiData.length)
   }
 
   const getVisibleCards = () => {
     const cards = []
     const cardCount = lggrid ? 3 : 2
     for (let i = 0; i < cardCount; i++) {
-      const index = (startIndex + i) % data.length
-      cards.push(data[index])
+      const index = (startIndex + i) % apiData.length
+      cards.push(apiData[index])
     }
     return cards
   }
