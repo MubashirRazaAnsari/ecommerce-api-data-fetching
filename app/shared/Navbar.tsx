@@ -23,9 +23,9 @@ const Navbar = () => {
   return (
     <div className="w-full mx-auto sticky top-0 z-50 bg-white shadow-md mb-6">
       <div className="w-[85vw] mx-auto flex justify-between items-center my-4">
-        <div className="flex items-center gap-2">
+        <div className="flex items-start md:items-center gap-2">
           <Link href={'/'}>
-          <h1 className="text-2xl font-bold">BUY-<span className="text-gray-500">IT</span></h1>
+          <h1 className="text-lg md:text-2xl md:font-bold">BUY-<span className="text-gray-500">IT</span></h1>
           </Link>
         </div>
 
@@ -65,7 +65,7 @@ const Navbar = () => {
                 </span>
               )}
             </Link>
-            <FaHeart className="text-sm hover:text-gray-500 w-4 h-4" />
+            <FaHeart className="text-sm hidden md:block hover:text-gray-500 w-4 h-4" />
             <button onClick={toggleMenu} className="md:hidden">
               {isMenuOpen ? (
                 <FaTimes className="text-sm text-gray-500" />
